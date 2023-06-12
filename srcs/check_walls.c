@@ -1,8 +1,20 @@
-#include "inc/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_walls.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtome-pe <dtome-pe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 14:02:50 by dtome-pe          #+#    #+#             */
+/*   Updated: 2023/06/09 14:03:24 by dtome-pe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int check_first_bottom(t_game *map)
+#include "so_long.h"
+
+int	check_first_bottom(t_game *map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map->map[0][i] != '\0')
@@ -21,10 +33,10 @@ int check_first_bottom(t_game *map)
 	return (SUCCESS);
 }
 
-int check_others(t_game *map)
+int	check_others(t_game *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;
@@ -45,9 +57,8 @@ int check_others(t_game *map)
 	return (SUCCESS);
 }
 
-int check_walls(t_game *map)
+int	check_walls(t_game *map)
 {	
-	
 	if (check_first_bottom(map) == ERROR)
 		return (ERROR);
 	if (check_others(map) == ERROR)

@@ -1,24 +1,36 @@
-#include "libft/libft.h"
-#include "inc/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtome-pe <dtome-pe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 14:05:02 by dtome-pe          #+#    #+#             */
+/*   Updated: 2023/06/12 10:07:16 by dtome-pe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int check_extension(char *path)
+#include "../libft/libft.h"
+#include "so_long.h"
+
+int	check_extension(char *path)
 {
-	int len;
-	char *ptr;
+	int		len;
+	char	*ptr;
 
 	len = ft_strlen(path);
 	ptr = &path[len - 4];
 	if (ft_strnstr(ptr, ".ber", 4) == NULL)
 		return (ERROR);
-	else 
+	else
 		return (SUCCESS);
 }
 
-int check_chars(t_game *map, const char *charset)
+int	check_chars(t_game *map, const char *charset)
 {
-	int i;
-	int j;
-	int k;
+	int	i;
+	int	j;
+	int	k;
 
 	k = 0;
 	i = 0;
@@ -29,9 +41,8 @@ int check_chars(t_game *map, const char *charset)
 		{
 			while (charset[k] != '\0')
 			{
-				if (map->map[i][j] == charset[k])
+				if (map->map[i][j] == charset[k++])
 					break ;
-				k++;
 				if (k == (int) ft_strlen(charset))
 					return (ERROR);
 			}
@@ -44,9 +55,9 @@ int check_chars(t_game *map, const char *charset)
 	return (SUCCESS);
 }
 
-int check_rectangle(t_game *map)
+int	check_rectangle(t_game *map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map->map[i] != NULL)
@@ -61,23 +72,27 @@ int check_rectangle(t_game *map)
 		return (SUCCESS);
 }
 
-int check_map(int argc, char *path,  t_game *map)
+int	check_map(int argc, char *path, t_game *map)
 {	
-	if (argc != 2)
-		return (ERROR);
+	if (argc == 1)
+		return (NO_ARG_ERROR);
+	if (argc > 2)
+		return (ARG_ERROR);
 	if (check_extension(path) == ERROR)
-		return (ERROR);
-	if (map->exit != 1 && map->position != 1)
-		return (ERROR);
+		return (EXT_ERROR);
+	if (map->exit != 1)
+		return (EXIT_ERROR);
+	if (map->position != 1)
+		return (POS_ERROR);
 	if (map->coins < 1)
-		return (ERROR);
+		return (COIN_ERROR);
 	if (check_chars(map, "01CEP") == ERROR)
-		return (ERROR);
+		return (CHAR_ERROR);
 	if (check_rectangle(map) == ERROR)
-		return (ERROR);
+		return (RECT_ERROR);
 	if (check_walls(map) == ERROR)
-		return (ERROR);
+		return (WALL_ERROR);
 	if (check_path(map) == ERROR)
-		return (ERROR);
+		return (PATH_ERROR);
 	return (SUCCESS);
 }

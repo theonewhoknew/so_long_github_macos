@@ -1,59 +1,63 @@
-#include "libft/libft.h"
-#include "inc/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_map.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtome-pe <dtome-pe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 09:38:15 by dtome-pe          #+#    #+#             */
+/*   Updated: 2023/06/12 08:46:11 by dtome-pe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../libft/libft.h"
+#include "so_long.h"
 #include <mlx.h>
+#include <stdlib.h>
 
-void put_walls(t_game *game, int col_px, int row_px)
-{	
-	game->img = mlx_xpm_file_to_image(game->mlx_ptr, "textures/wall.xpm", &(game->width), &(game->height));
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, col_px, row_px);
-}
-
-void put_tiles(t_game *game, int col_px, int row_px)
+void	check_put(t_game *game, char tile, int col_px, int row_px)
 {
-	game->img = mlx_xpm_file_to_image(game->mlx_ptr, "textures/tile.xpm", &(game->width), &(game->height));
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, col_px, row_px);
-}
-
-void put_coins(t_game *game, int col_px, int row_px)
-{
-	game->img = mlx_xpm_file_to_image(game->mlx_ptr, "textures/coin.xpm", &(game->width), &(game->height));
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, col_px, row_px);;
-}
-
-void put_player_or_exit(t_game *game, int col_px, int row_px, char c)
-{	
-	if (c == 'P')
-		game->img = mlx_xpm_file_to_image(game->mlx_ptr, "textures/character.xpm", &(game->width), &(game->height));
+	if (tile == '1')
+		put_walls(game, col_px, row_px);
+	else if (tile == '0')
+		put_tiles(game, col_px, row_px);
+	else if (tile == 'C')
+		put_coins(game, col_px, row_px);
 	else
-		game->img = mlx_xpm_file_to_image(game->mlx_ptr, "textures/door.xpm", &(game->width), &(game->height));
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, col_px, row_px);
+		put_player_or_exit(game, col_px, row_px, tile);
 }
 
-void render_map(t_game *game, int x, int y)
+void	render_map(t_game *game, int x, int y)
 {	
-	int col_px;
-	int row_px;
+	int	col_px;
+	int	row_px;
 
 	col_px = 0;
 	row_px = 0;
+	init_img(game);
 	while (y < game->row)
 	{	
 		while (x < game->col)
 		{	
-			if(game->map[y][x] == '1')
-				put_walls(game, col_px, row_px);
-			else if(game->map[y][x] == '0')
-				put_tiles(game, col_px, row_px);
-			else if(game->map[y][x] == 'C')
-				put_coins(game, col_px, row_px);
-			else 
-				put_player_or_exit(game, col_px, row_px, game->map[y][x]);
-			col_px += 50;
+			check_put(game, game->map[y][x], col_px, row_px);
+			col_px += PIXEL;
 			x++;
 		}
 		col_px = 0;
 		x = 0;
-		row_px += 50;
+		row_px += PIXEL;
 		y++;
+	}
+}
+
+void	print_map(t_game *game)
+{	
+	int	i;
+
+	i = 0;
+	while (game->map[i])
+	{
+		ft_printf("%s\n", game->map[i]);
+		i++;
 	}
 }

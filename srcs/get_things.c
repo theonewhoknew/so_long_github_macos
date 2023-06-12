@@ -1,9 +1,21 @@
-#include "inc/so_long.h"
-#include "libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_things.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtome-pe <dtome-pe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 12:03:56 by dtome-pe          #+#    #+#             */
+/*   Updated: 2023/06/09 12:05:44 by dtome-pe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void get_row_col(t_game *map)
+#include "so_long.h"
+#include "../libft/libft.h"
+
+void	get_row_col(t_game *map)
 {
-	int row;
+	int	row;
 
 	row = 0;
 	while (map->map[row] != NULL)
@@ -12,10 +24,10 @@ void get_row_col(t_game *map)
 	map->col = ft_strlen(map->map[0]);
 }
 
-void get_coins(t_game *map)
+void	get_coins(t_game *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -32,10 +44,10 @@ void get_coins(t_game *map)
 	}
 }
 
-void get_exit(t_game *map)
+void	get_exit(t_game *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -52,10 +64,10 @@ void get_exit(t_game *map)
 	}
 }
 
-void get_position(t_game *map)
+void	get_position(t_game *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -72,10 +84,10 @@ void get_position(t_game *map)
 	}
 }
 
-void get_pos_coord(t_game *map)
+void	get_pos_coord(t_game *map)
 {	
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
@@ -93,5 +105,4 @@ void get_pos_coord(t_game *map)
 		x = 0;
 		y++;
 	}
-
 }

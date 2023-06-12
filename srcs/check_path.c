@@ -1,10 +1,22 @@
-#include "inc/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_path.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtome-pe <dtome-pe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 14:03:33 by dtome-pe          #+#    #+#             */
+/*   Updated: 2023/06/09 14:04:49 by dtome-pe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
 #include <stdlib.h>
 
-void visited_init(t_game *map)
+void	visited_init(t_game *map)
 {	
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	if (map->visited == NULL)
@@ -30,17 +42,17 @@ void visited_init(t_game *map)
 	}
 }
 
-int is_valid_move(t_game *path_map, int row, int col) 
+int	is_valid_move(t_game *path_map, int row, int col)
 {	
 	if (row < 0 || row >= path_map->row || col < 0 || col >= path_map->col)
-        return (ERROR);
-    if (path_map->map[row][col] == '1')
-        return (ERROR);
+		return (ERROR);
+	if (path_map->map[row][col] == '1')
+		return (ERROR);
 	else
-   		return (SUCCESS);
+		return (SUCCESS);
 }
 
-void dfs_coins(t_game *map, int row, int col)
+void	dfs_coins(t_game *map, int row, int col)
 {	
 	if (map->path_coins == 0)
 		return ;
@@ -56,10 +68,10 @@ void dfs_coins(t_game *map, int row, int col)
 	if (map->visited[row][col + 1] == '0')
 		dfs_coins(map, row, col + 1);
 	if (map->visited[row][col - 1] == '0')
-		dfs_coins(map, row, col - 1); 	  
+		dfs_coins(map, row, col - 1);
 }
 
-void dfs_exit(t_game *map, int row, int col)
+void	dfs_exit(t_game *map, int row, int col)
 {	
 	if (map->path_exit == SUCCESS)
 		return ;
@@ -75,10 +87,10 @@ void dfs_exit(t_game *map, int row, int col)
 	if (map->visited[row][col + 1] == '0')
 		dfs_exit(map, row, col + 1);
 	if (map->visited[row][col - 1] == '0')
-		dfs_exit(map, row, col - 1); 
-}	 
+		dfs_exit(map, row, col - 1);
+}
 
-int check_path(t_game *map)
+int	check_path(t_game *map)
 {	
 	get_pos_coord(map);
 	map->visited = NULL;
